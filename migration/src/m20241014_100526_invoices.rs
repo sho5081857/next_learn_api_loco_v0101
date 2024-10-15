@@ -10,7 +10,7 @@ impl MigrationTrait for Migration {
             .create_table(
                 Table::create()
                     .table(Invoices::Table)
-                    .col(uuid_uniq(Invoices::Id).primary_key())
+                    .col(uuid_uniq(Invoices::Id).primary_key().extra("DEFAULT uuid_generate_v4()"))
                     .col(uuid(Invoices::CustomerId))
                     .col(integer(Invoices::Amount))
                     .col(string(Invoices::Status))

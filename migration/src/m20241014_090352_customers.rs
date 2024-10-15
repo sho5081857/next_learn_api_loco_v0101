@@ -10,7 +10,7 @@ impl MigrationTrait for Migration {
             .create_table(
                 Table::create()
                 .table(Customers::Table)
-                    .col(uuid_uniq(Customers::Id).primary_key())
+                    .col(uuid_uniq(Customers::Id).primary_key().extra("DEFAULT uuid_generate_v4()"))
                     .col(string(Customers::Name))
                     .col(string(Customers::Email))
                     .col(string(Customers::ImageUrl))
