@@ -5,3 +5,4 @@ mod user;
 
 pub mod revenue;
 pub mod customer;
+pub mod invoice;
