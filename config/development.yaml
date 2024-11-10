@@ -19,7 +19,25 @@ server:
   # Port on which the server will listen. the server binding is 0.0.0.0:{PORT}
   port: 5150
   # The UI hostname or IP address that mailers will point to.
-  host: http://localhost
+  host: 0.0.0.0
+  binding: 0.0.0.0
+  middlewares:
+    cors:
+      enable: true
+      # Set the value of the [`Access-Control-Allow-Origin`][mdn] header
+      allow_origins:
+        - {{ get_env(name="FRONTEND_URL", default="http://localhost:3000") }}
+      # Set the value of the [`Access-Control-Allow-Headers`][mdn] header
+      allow_headers:
+        - Content-Type
+        - Authorization
+      # Set the value of the [`Access-Control-Allow-Methods`][mdn] header
+      allow_methods:
+        - POST
+        - GET
+        - PATCH
+        - DELETE
+      allow_credentials: true
 
 # Worker Configuration
 workers:
@@ -89,4 +107,3 @@ auth:
     secret: fnnmSaXDxvBJxaNom6Bd
     # Token expiration time in seconds
     expiration: 604800 # 7 days
-
