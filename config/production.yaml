@@ -104,6 +104,6 @@ auth:
   # JWT authentication
   jwt:
     # Secret key for token generation and verification
-    secret: {{ get_env(name="SECRET", default="http://localhost:3000") }}
+    secret: {{ get_env(name="SECRET") }}
     # Token expiration time in seconds
     expiration: 604800 # 7 days
