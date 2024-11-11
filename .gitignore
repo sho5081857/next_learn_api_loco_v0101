@@ -20,9 +20,6 @@ target/
 
 
 .devcontainer/.env
-.github/
-!/.github/workflows/
-!/.github/workflows/deploy.yaml
 _command
 _tools
 .vscode
