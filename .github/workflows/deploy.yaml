@@ -1,22 +1,18 @@
 name: Push image to ECR
 on:
-  pull_request:
+  push:
     branches: main
-    types:
-      - closed
     paths:
       - '**/*.rs'
       - 'Cargo.toml'
       - 'Cargo.lock'
       - 'Dockerfile'
       - '.dokerignore'
+      - '.github/workflows/deploy.yaml'
 
 permissions:
   id-token: write
   contents: read
-
-env:
-  AWS_PROFILE_NAME: ecr-next-learn-api-loco
 
 jobs:
   plan:
