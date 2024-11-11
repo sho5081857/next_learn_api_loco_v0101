@@ -1,0 +1,49 @@
+name: Push image to ECR
+on:
+  pull_request:
+    branches: main
+    types:
+      - closed
+    paths:
+      - '**/*.rs'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'Dockerfile'
+      - '.dokerignore'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_PROFILE_NAME: ecr-next-learn-api-loco
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t next-learn-api-loco .
+          docker tag next-learn-api-loco $REGISTRY/${{ secrets.ECR_REPOSITORY }}:latest
+          docker push $REGISTRY/${{ secrets.ECR_REPOSITORY }}:latest
