@@ -216,7 +216,7 @@ pub fn routes() -> Routes {
         .add("/latest", get(get_all_latest))
         .add("/filtered", get(get_filtered))
         .add("/count", get(get_count))
-        .add("/statusCount", get(get_status_count))
+        .add("/status/count", get(get_status_count))
         .add("/pages", get(get_pages))
         .add("/:invoiceId", get(get_by_id))
         .add("", post(create))
